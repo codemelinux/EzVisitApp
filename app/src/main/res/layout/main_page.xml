@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_page"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/residentTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="100dp"
+        android:text="Resident menu"
+        android:textSize="34dp"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/gen_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/residentTxtView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="158dp"
+        android:background="@color/colorPrimary"
+        android:text="Generate QR Code"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/viewHistory_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gen_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@color/colorPrimary"
+        android:text="View History"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:textStyle="normal" />
+</RelativeLayout>
