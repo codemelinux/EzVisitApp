@@ -92,17 +92,17 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_aboutus) {
             Fragment fragment = new Generated_code();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_faq) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_contact) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_logout) {
 
         } else if (id == R.id.nav_send) {
 

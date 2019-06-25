@@ -18,7 +18,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+
 
 public class Generate_qr_code extends Fragment {
 
@@ -47,13 +47,13 @@ public class Generate_qr_code extends Fragment {
         gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String line1 = "Name         : " + name.getText() .toString().trim();
+                String line1 = "Name       : " + name.getText() .toString().trim();
                 String line2 = "Mobile No  : " + mobileNo.getText().toString().trim();
-                String line3 = "IC No          : " + icNo.getText().toString().trim();
-                String line4 = "VEH No      : " + vehNo.getText().toString().trim();
-                String line5 = "Unit No       : " + unitNo.getText().toString().trim();
-                String line6 = "Time           : " + time.getText().toString().trim();
-                String line7 = "Date            : " + date.getText().toString().trim();
+                String line3 = "IC No      : " + icNo.getText().toString().trim();
+                String line4 = "VEH No     : " + vehNo.getText().toString().trim();
+                String line5 = "Unit No    : " + unitNo.getText().toString().trim();
+                String line6 = "Time       : " + time.getText().toString().trim();
+                String line7 = "Date       : " + date.getText().toString().trim();
 
                 text2Qr = line1 + "\n" + line2 +  "\n" + line3 +  "\n" + line4 +  "\n" + line5 +  "\n" + line6 +  "\n" + line7;
                 ///// Sending data to new fragment /////
