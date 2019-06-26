@@ -12,9 +12,10 @@
     <string name="menu_aboutus">About Us</string>
     <string name="menu_faq">FAQ</string>
     <string name="menu_contactus">Contact Us</string>
-    <string name="menu_logout">Share</string>
+    <string name="menu_logout">Logout</string>
     <string name="menu_send">Send</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

@@ -1,11 +1,10 @@
-package com.example.ezvisit;
+package com.codemelinux.ezvisit;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,23 +18,19 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 import static android.content.Context.WINDOW_SERVICE;
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class Generated_code extends Fragment {
     String text2Qr;
@@ -99,7 +94,7 @@ public class Generated_code extends Fragment {
 
                 File imagePath = new File(getActivity().getCacheDir(), "images");
                 File newFile = new File(imagePath, "image.png");
-                Uri contentUri = FileProvider.getUriForFile(getActivity(), "com.example.ezvisit.fileprovider", newFile);
+                Uri contentUri = FileProvider.getUriForFile(getActivity(), "com.codemelinux.ezvisit.fileprovider", newFile);
 
                 if (contentUri != null) {
                     Intent shareIntent = new Intent();

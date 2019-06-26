@@ -1,4 +1,4 @@
-package com.example.ezvisit;
+package com.codemelinux.ezvisit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,16 +10,15 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
@@ -103,9 +102,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_contact) {
 
         } else if (id == R.id.nav_logout) {
-
-        } else if (id == R.id.nav_send) {
-
+            FirebaseAuth.getInstance().signOut();
+            Intent loginActivity = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(loginActivity);
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

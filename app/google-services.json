@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "297600719445",
+    "firebase_url": "https://ezvisit-1218c.firebaseio.com",
+    "project_id": "ezvisit-1218c",
+    "storage_bucket": "ezvisit-1218c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297600719445:android:6668ed09f2704544",
+        "android_client_info": {
+          "package_name": "com.codemelinux.ezvisit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297600719445-pboqbh9u70nu8593ger68pqu8q7rdne3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD7lHUc95LWg6NsLsRJMp2mO1OfQuCtp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297600719445-pboqbh9u70nu8593ger68pqu8q7rdne3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

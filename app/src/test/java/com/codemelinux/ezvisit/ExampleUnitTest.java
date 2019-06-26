@@ -1,4 +1,4 @@
-package com.example.ezvisit;
+package com.codemelinux.ezvisit;
 
 import org.junit.Test;
 
