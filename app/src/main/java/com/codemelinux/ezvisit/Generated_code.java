@@ -15,9 +15,20 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 
@@ -26,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -34,16 +46,28 @@ import static android.content.Context.WINDOW_SERVICE;
 
 public class Generated_code extends Fragment {
     String text2Qr;
+
     Button share_btn;
     ImageView qr_image;
     Intent shareIntent;
+    //Firebase
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    DatabaseReference userInfo;
+    FirebaseAuth auth;
+    DatabaseReference mDatabase;
+
     private QRGEncoder qrgEncoder;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle args) {
         View view = inflater.inflate(R.layout.generated_code, container,false);
 
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle("QR Code");
+
         qr_image = (ImageView) view.findViewById(R.id.qr_image);
+        auth = FirebaseAuth.getInstance();
 
         Bundle bundle = getArguments();
 
@@ -91,10 +115,18 @@ public class Generated_code extends Fragment {
             @Override
             public void onClick(View view) {
 
+                // Write a message to the storage
+                storage = FirebaseStorage.getInstance();
+                storageReference = storage.getReference();
+                // writing to database
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
                 File imagePath = new File(getActivity().getCacheDir(), "images");
                 File newFile = new File(imagePath, "image.png");
                 Uri contentUri = FileProvider.getUriForFile(getActivity(), "com.codemelinux.ezvisit.fileprovider", newFile);
+
+
 
                 if (contentUri != null) {
                     Intent shareIntent = new Intent();
@@ -102,7 +134,26 @@ public class Generated_code extends Fragment {
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
                     shareIntent.setDataAndType(contentUri, getActivity().getContentResolver().getType(contentUri));
                     shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+
+
                     startActivity(Intent.createChooser(shareIntent, "Choose an app"));
+
+                    FirebaseUser user = auth.getCurrentUser();
+                    final String userID = user.getUid();
+
+                    //mDatabase.child("users/"+ userID + "/" + "Visitors").push().setValue(text2Qr);
+
+
+
+
+                    StorageReference ref = storageReference.child("images/users/"+ userID + "/" +UUID.randomUUID().toString());
+                    ref.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //photoUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                           // mDatabase.child("users/"+ userID + "/" + "Visitors").push().setValue(photoUrl);
+                        }
+                    });
                 }
 
                 /*

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_page"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity">
 
 
@@ -14,57 +13,79 @@
         android:id="@+id/residentTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
         android:text="Resident menu"
-        android:textSize="34dp"
-        android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="32dp"
+        android:textStyle="normal|italic"
+        app:layout_constraintBottom_toTopOf="@+id/login_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/login_photo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_mail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ezlogo" />
 
 
     <Button
         android:id="@+id/gen_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/residentTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/residentTxtView"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="158dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="180dp"
         android:background="@drawable/reg_btn_style"
-        android:text="Generate QR Code"
-        android:textSize="28dp"
-        android:textColor="#fff"
-        android:textStyle="normal"
+        android:text=" Generate QR Code "
         android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/viewHistory_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/gen_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/gen_btn"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="25dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="112dp"
         android:background="@drawable/reg_btn_style"
-        android:text="View History"
-        android:textSize="28dp"
-        android:textColor="#fff"
-        android:textStyle="normal"
+        android:text=" View History "
         android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

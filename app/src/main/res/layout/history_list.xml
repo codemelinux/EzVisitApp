@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        card_view:cardCornerRadius="4dp">
+
+        <ImageView
+            android:id="@+id/qr_image"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="right"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="18dp"
+                    tools:text="name" />
+
+                <TextView
+                    android:id="@+id/mobileNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp"
+                    tools:text="moblie no" />
+
+                <TextView
+                    android:id="@+id/icNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp"
+                    tools:text="IC No" />
+
+                <TextView
+                    android:id="@+id/vehNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp"
+                    tools:text="VEH No" />
+
+                <TextView
+                    android:id="@+id/unitNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp"
+                    tools:text="Unit No" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp"
+                    tools:text="Time" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp"
+                    tools:text="Date" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</FrameLayout>
