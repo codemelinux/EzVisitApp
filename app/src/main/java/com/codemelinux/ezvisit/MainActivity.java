@@ -10,7 +10,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -25,6 +24,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button gen_btn;
+    UserLocalStore userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        userLocalStore = new UserLocalStore(this);
+
         toolbar.setTitle("Home");
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -99,7 +101,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_contact) {
 
         } else if (id == R.id.nav_logout) {
-            FirebaseAuth.getInstance().signOut();
+            userLocalStore.clearUserData();
+            userLocalStore.setUserLoggedIn(false);
             Intent loginActivity = new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(loginActivity);
             finish();

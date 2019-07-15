@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,9 +26,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText userMail,userPassword;
     private Button btnLogin;
     private ProgressBar loginProgress;
-    private FirebaseAuth mAuth;
-    private Intent HomeActivity;
+    //private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     private ImageView loginPhoto;
+    //FirebaseUser user;
+    private String UserId;
+
+    UserLocalStore userLocalStore;
+
+
+    public static  final  String COLLECTION_NAME_KEY = "users";
 
 
 
@@ -39,9 +48,13 @@ public class LoginActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.loginBtn);
         loginProgress = findViewById(R.id.login_progress);
-        mAuth = FirebaseAuth.getInstance();
+       // mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         //HomeActivity = new Intent(this,com.codemelinux.aws.blogapp.Activities.Home.class);
         loginPhoto = findViewById(R.id.login_photo);
+        userLocalStore = new UserLocalStore(this);
+
+
 
 
         loginProgress.setVisibility(View.INVISIBLE);
@@ -49,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loginProgress.setVisibility(View.VISIBLE);
-                btnLogin.setVisibility(View.INVISIBLE);
+                btnLogin.setVisibility(View.VISIBLE);
 
                 final String mail = userMail.getText().toString();
                 final String password = userPassword.getText().toString();
@@ -61,16 +74,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    signIn(mail,password);
-                }
+                    signIn();
 
+                }
 
             }
         });
 
 
     }
-
+    /*
     private void signIn(String mail, String password) {
 
 
@@ -98,6 +111,71 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    } */
+
+
+
+    private void signIn() {
+
+
+        if (!userMail.getText().toString().equals("") && !userPassword.getText().toString().equals(""))
+        {
+
+            DocumentReference docRef = db.collection(COLLECTION_NAME_KEY).document(userMail.getText().toString());
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                    if (documentSnapshot.exists())
+                    {
+                        Users users = documentSnapshot.toObject(Users.class);
+
+                        if (users.getPassword().equals(userPassword.getText().toString()))
+                        {
+
+                            Toast.makeText(getApplicationContext(), "welcome", Toast.LENGTH_SHORT).show();
+                            loginProgress.setVisibility(View.INVISIBLE);
+                            btnLogin.setVisibility(View.VISIBLE);
+
+                            //// store user email and password
+                            Users registeredData = new Users(userMail.getText().toString(), userPassword.getText().toString());
+
+                            //Users user = new Users(null, null);
+                            userLocalStore.storeUserData(registeredData);
+                            userLocalStore.setUserLoggedIn(true);
+
+                            updateUI();
+                        }
+
+                        else
+                        {
+                            Toast.makeText(LoginActivity.this, "Passsword Mismatching", Toast.LENGTH_SHORT).show();
+                            btnLogin.setVisibility(View.VISIBLE);
+                            loginProgress.setVisibility(View.INVISIBLE);
+                        }
+
+                    }
+
+                    else
+                    {
+
+                        Toast.makeText(getApplicationContext(), "Check your Email ", Toast.LENGTH_SHORT).show();
+                        btnLogin.setVisibility(View.VISIBLE);
+                        loginProgress.setVisibility(View.INVISIBLE);
+                    }
+
+                }
+            });
+        }
+
+        else
+
+        {
+            Toast.makeText(LoginActivity.this, "Email or Password Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
+
+
+
     }
 
     private void updateUI() {
@@ -113,17 +191,45 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
     }
 
+    public boolean authenticate(){
+        return userLocalStore.getUserLoggedIn();
+    }
+
+    private void logUserIn(Users returnedUser) {
+        userLocalStore.storeUserData(returnedUser);
+        userLocalStore.setUserLoggedIn(true);
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
 
-        if(user != null) {
+
+        if(authenticate() == true) {
             //user is already connected  so we need to redirect him to home page
             updateUI();
 
         }
+
+        /*
+        if(user != null){
+
+            final String userID = user.getUid();
+            db.collection(COLLECTION_NAME_KEY).document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String user_name = documentSnapshot.getString("email");
+                    String password  = documentSnapshot.getString("password");
+
+
+                    userMail.setText(user_name);
+                    userPassword.setText(password);
+                }
+            });
+
+            updateUI();
+        }*/
 
 
 

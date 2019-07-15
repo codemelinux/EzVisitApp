@@ -1,8 +1,5 @@
 package com.codemelinux.ezvisit;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.util.UUID;
 
 
 public class ViewHistory extends Fragment {
@@ -31,11 +28,13 @@ public class ViewHistory extends Fragment {
 
     private RecyclerView mVisitRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-    private DatabaseReference mFirebaseDatabaseReference;
-    private FirebaseRecyclerAdapter<VisitorClass, visitorViewHolder> mFirebaseAdapter;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirestoreRecyclerAdapter<VisitorClass, ViewHistoryAdapter.visitorViewHolder> mFirebaseAdapter;
     String mUsername;
+    UserLocalStore userLocalStore;
+    private ViewHistoryAdapter adapter;
+
+    private CollectionReference docRef;
 
 
 
@@ -47,87 +46,54 @@ public class ViewHistory extends Fragment {
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle("History");
 
+
         mVisitRecyclerView = (RecyclerView) view.findViewById(R.id.visitRecyclerView);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setStackFromEnd(true);
+        userLocalStore = new UserLocalStore(getActivity());
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        final String user = userLocalStore.getLoggedInUser().getEmail();
+        docRef = db.collection("users").document(user).collection("visits");
 
-        FirebaseUser user = mFirebaseAuth.getCurrentUser();
-        String userID = user.getUid();
 
-        if (mFirebaseUser == null) {
-            // Not signed in, launch the Sign In activity
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            getActivity().finish();
-            return view;
-        } else {
-            mUsername = mFirebaseUser.getDisplayName();
-            if (mFirebaseUser.getPhotoUrl() != null) {
-                //mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-            }
-        }
 
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<VisitorClass, visitorViewHolder>(
-                VisitorClass.class,
-                R.layout.history_list,
-                visitorViewHolder.class,
-                mFirebaseDatabaseReference.child("users/"+ userID +"/" + "Visitors")) {
+        Query query = docRef.orderBy("name", Query.Direction.DESCENDING).limit(1);
 
-            @Override
-            protected void populateViewHolder(visitorViewHolder viewHolder, VisitorClass model, int position) {
-                viewHolder.visitorName.setText(    "Name      : "+ model.getName());
-                viewHolder.visitorMobileNo.setText("Mobile No  : "+ model.getMobileNo());
-                viewHolder.visitorIcno.setText(    "IC No           : "+ model.getIcNo());
-                viewHolder.visitorVehno.setText(   "VEH No       : "+ model.getVehNo());
-                viewHolder.visitorUnitno.setText(  "Unit No       : "+ model.getUnitNo());
-                viewHolder.time.setText(           "Time           : "+ model.getTime());
-                viewHolder.date.setText(           "Date            : "+ model.getDate());
-                Glide.with(getActivity()).load(model.getPhotoUrl()).into(viewHolder.qrImage);
-            }
-        };
+        FirestoreRecyclerOptions<VisitorClass> options = new FirestoreRecyclerOptions.Builder<VisitorClass>()
+                .setQuery(query,VisitorClass.class)
+                .build();
 
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int roomCount = mFirebaseAdapter.getItemCount();
-                int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                if (lastVisiblePosition == -1 || (positionStart >= (roomCount - 1) && lastVisiblePosition == (positionStart - 1))) {
-                    mVisitRecyclerView.scrollToPosition(positionStart);
-                }
-            }
-        });
-        ////// populates the cardview ////
-        mVisitRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mVisitRecyclerView.setAdapter(mFirebaseAdapter);
+        adapter = new ViewHistoryAdapter(options);
+        RecyclerView recyclerView = view.findViewById(R.id.visitRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
+
+
+
+        setUpRecyclerView();
+
+
 
         return view;
     }
 
+    private void  setUpRecyclerView(){
 
-    public static class visitorViewHolder extends RecyclerView.ViewHolder {
-        TextView visitorName,visitorMobileNo, visitorIcno, visitorVehno, visitorUnitno,time,date;
-        ImageView qrImage;
 
-        //ImageView roomPhoto;
 
-        public visitorViewHolder(View v) {
-            super(v);
-            visitorName = (TextView) itemView.findViewById(R.id.name);
-            visitorMobileNo = (TextView) itemView.findViewById(R.id.mobileNo);
-            visitorIcno = (TextView) itemView.findViewById(R.id.icNo);
-            visitorVehno = (TextView) itemView.findViewById(R.id.vehNo);
-            visitorUnitno = (TextView) itemView.findViewById(R.id.unitNo);
-            time = (TextView) itemView.findViewById(R.id.time);
-            date= (TextView) itemView.findViewById(R.id.date);
-            qrImage = (ImageView) itemView.findViewById(R.id.qr_image);
-        }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
-
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 }

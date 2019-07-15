@@ -20,15 +20,8 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 
@@ -50,12 +43,7 @@ public class Generated_code extends Fragment {
     Button share_btn;
     ImageView qr_image;
     Intent shareIntent;
-    //Firebase
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    DatabaseReference userInfo;
-    FirebaseAuth auth;
-    DatabaseReference mDatabase;
+
 
     private QRGEncoder qrgEncoder;
 
@@ -67,7 +55,6 @@ public class Generated_code extends Fragment {
         toolbar.setTitle("QR Code");
 
         qr_image = (ImageView) view.findViewById(R.id.qr_image);
-        auth = FirebaseAuth.getInstance();
 
         Bundle bundle = getArguments();
 
@@ -115,12 +102,6 @@ public class Generated_code extends Fragment {
             @Override
             public void onClick(View view) {
 
-                // Write a message to the storage
-                storage = FirebaseStorage.getInstance();
-                storageReference = storage.getReference();
-                // writing to database
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-
 
                 File imagePath = new File(getActivity().getCacheDir(), "images");
                 File newFile = new File(imagePath, "image.png");
@@ -138,89 +119,9 @@ public class Generated_code extends Fragment {
 
                     startActivity(Intent.createChooser(shareIntent, "Choose an app"));
 
-                    FirebaseUser user = auth.getCurrentUser();
-                    final String userID = user.getUid();
 
-                    //mDatabase.child("users/"+ userID + "/" + "Visitors").push().setValue(text2Qr);
-
-
-
-
-                    StorageReference ref = storageReference.child("images/users/"+ userID + "/" +UUID.randomUUID().toString());
-                    ref.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //photoUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                           // mDatabase.child("users/"+ userID + "/" + "Visitors").push().setValue(photoUrl);
-                        }
-                    });
                 }
 
-                /*
-                if (text2Qr != null ){
-
-                    //calculating bitmap dimension
-                    WindowManager manager = (WindowManager)getActivity().getSystemService(WINDOW_SERVICE);
-                    Display display = manager.getDefaultDisplay();
-                    Point point = new Point();
-                    display.getSize(point);
-                    int width = point.x;
-                    int height = point.y;
-                    int smallerDimension = width < height ? width : height;
-                    smallerDimension = smallerDimension * 3 / 4;
-
-                    qrgEncoder = new QRGEncoder(text2Qr, null, QRGContents.Type.TEXT, smallerDimension);
-                    try {
-                        Bitmap bitmapResult = qrgEncoder.encodeAsBitmap();
-                        qr_image.setImageBitmap(bitmapResult);
-
-                        // String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Image Description", null);
-                        //Uri uri = Uri.parse(path);
-                        Uri imageUri = (Uri) Uri.parse(String.valueOf(QRGContents.ImageType.IMAGE_JPEG));
-
-
-                        shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-                        shareIntent.setType("image/*");
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "EzVisit");
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-
-                        startActivity(Intent.createChooser(shareIntent, "Share Image"));
-
-                    } catch (WriterException e) {
-                        Log.v(TAG, e.toString());
-                    }
-                } else {
-                    //editText.setError("Enter some text");
-
-
-
-
-                    /**
-                    try{
-                        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-                        BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr,   BarcodeFormat.QR_CODE,200,200);
-                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                       // Object i = qr_image.setImageBitmap(bitmap);
-
-
-                       // String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Image Description", null);
-                        //Uri uri = Uri.parse(path);
-                        Uri imageUri = (Uri) Uri.parse((qr_image.setImageBitmap(bitmap)));
-
-                        shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-                        shareIntent.setType("image/*");
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "EzVisit");
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-
-                        startActivity(Intent.createChooser(shareIntent, "Share Image"));
-
-
-                    } catch (WriterException e) {
-                        e.printStackTrace();
-                    }
-
-                }**/
 
             }
 
