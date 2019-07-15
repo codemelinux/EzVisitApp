@@ -1,5 +1,6 @@
 package com.codemelinux.ezvisit;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class MainPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle args) {
         View view = inflater.inflate(R.layout.main_page, container,false);
 
+        view.setBackgroundColor(Color.WHITE);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
 

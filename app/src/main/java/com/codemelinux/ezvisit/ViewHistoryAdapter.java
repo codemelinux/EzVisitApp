@@ -28,9 +28,9 @@ public class ViewHistoryAdapter extends FirestoreRecyclerAdapter <VisitorClass, 
         viewHolder.visitorIcno.setText(    "IC No           : "+ model.getIcNo());
 //        viewHolder.visitorVehno.setText(   "VEH No       : "+ model.getVehNo());
         //viewHolder.visitorUnitno.setText(  "Unit No       : "+ model.getUnitNo());
-        viewHolder.time.setText(           "Time           : "+ model.getTime());
+        ///viewHolder.time.setText(           "Time           : "+ model.getTime());
         viewHolder.date.setText(           "Date            : "+ model.getDate());
-        //Glide.with(viewHolder.itemView.getContext()).load(model.getPhotoUrl()).into(viewHolder.qrImage);
+       // Glide.with(viewHolder.itemView.getContext()).load(model.getPhotoUrl()).into(viewHolder.qrImage);
 
     }
 

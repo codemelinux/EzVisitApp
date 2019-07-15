@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         card_view:cardCornerRadius="4dp">
@@ -61,17 +61,6 @@
                     android:textSize="15dp"
                     tools:text="IC No" />
 
-
-
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="15dp"
-                    tools:text="Time" />
 
                 <TextView
                     android:id="@+id/date"

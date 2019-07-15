@@ -9,13 +9,13 @@ public class VisitorClass {
 
     }
 
-    public VisitorClass (String name, String mobileNo, String icNo, String vehNo, String unitNo, String time, String date, String photoUrl) {
+    public VisitorClass (String name, String mobileNo, String icNo, String vehNo, String unitNo, String date, String photoUrl) {
         this.name = name;
         this.mobileNo = mobileNo;
         this.icNo = icNo;
         this.vehNo = vehNo;
         this.unitNo = unitNo;
-        this.time = time;
+       // this.time = time;
         this.date= date;
         this.photoUrl = photoUrl;
 
@@ -60,12 +60,12 @@ public class VisitorClass {
         this.icNo = unitNo;
     }
 
-    public String getTime(){
+   /* public String getTime(){
         return time;
     }
     public void  setTime(String time){
         this.time = time;
-    }
+    }*/
 
     public String getDate(){
         return date;

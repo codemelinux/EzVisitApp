@@ -13,14 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.UUID;
 
 
 public class ViewHistory extends Fragment {
@@ -29,8 +27,6 @@ public class ViewHistory extends Fragment {
     private RecyclerView mVisitRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirestoreRecyclerAdapter<VisitorClass, ViewHistoryAdapter.visitorViewHolder> mFirebaseAdapter;
-    String mUsername;
     UserLocalStore userLocalStore;
     private ViewHistoryAdapter adapter;
 
@@ -57,7 +53,7 @@ public class ViewHistory extends Fragment {
 
 
 
-        Query query = docRef.orderBy("name", Query.Direction.DESCENDING).limit(1);
+        Query query = docRef.orderBy("date", Query.Direction.DESCENDING).limit(4);
 
         FirestoreRecyclerOptions<VisitorClass> options = new FirestoreRecyclerOptions.Builder<VisitorClass>()
                 .setQuery(query,VisitorClass.class)
