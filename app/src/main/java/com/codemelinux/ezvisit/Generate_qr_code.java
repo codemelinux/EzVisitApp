@@ -290,7 +290,7 @@ public class Generate_qr_code extends Fragment {
 
                                         String unitNo = (String) document.get("unitNo");
                                         // calling visitors class
-                                        VisitorClass visitorClass = new VisitorClass(name.getText().toString(), mobileNo.getText().toString(), icNo.getText().toString(), vehNo.getText().toString(),unitNo,date.getText().toString(), photoUrl);
+                                        VisitorClass visitorClass = new VisitorClass(user,name.getText().toString(), mobileNo.getText().toString(), icNo.getText().toString(), vehNo.getText().toString(),unitNo,date.getText().toString(), photoUrl);
                                         // passing visitor class to firestore db
                                         db.collection("users").document(user + "/" + "visits/" + UUID.randomUUID().toString()).set(visitorClass);
 
